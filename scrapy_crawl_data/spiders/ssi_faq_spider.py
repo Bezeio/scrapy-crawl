@@ -1,5 +1,5 @@
 import scrapy
-from scrapy_craw_data.items import FAQItem
+from scrapy_crawl_data.items import FAQItem
 
 class SSIFAQSpider(scrapy.Spider):
     name = 'ssi_faq'

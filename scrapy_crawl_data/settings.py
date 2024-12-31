@@ -1,16 +1,16 @@
 # settings.py
 
-BOT_NAME = 'scrapy_craw_data'
+BOT_NAME = 'scrapy_crawl_data'
 
-SPIDER_MODULES = ['scrapy_craw_data.spiders']
-NEWSPIDER_MODULE = 'scrapy_craw_data.spiders'
+SPIDER_MODULES = ['scrapy_crawl_data.spiders']
+NEWSPIDER_MODULE = 'scrapy_crawl_data.spiders'
 
 # Respect robots.txt rules
 ROBOTSTXT_OBEY = True
 
 # Configure item pipelines (if needed)
 ITEM_PIPELINES = {
-    # 'scrapy_craw_data.pipelines.YourPipeline': 300,
+    # 'scrapy_crawl_data.pipelines.YourPipeline': 300,
 }
 
 #Unicode
