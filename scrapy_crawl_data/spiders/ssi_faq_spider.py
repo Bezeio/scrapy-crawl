@@ -1,27 +1,33 @@
 import scrapy
 from scrapy_crawl_data.items import FAQItem
 
-class SSIFAQSpider(scrapy.Spider):
-    name = 'ssi_faq'
-    allowed_domains = ['ssi.com.vn']
-    start_urls = ['https://www.ssi.com.vn/khach-hang-ca-nhan/phai-sinh-faq']
+class CafeFSpider(scrapy.Spider):
+    name = 'cafef'
+    allowed_domains = ['cafef.vn']
+    start_urls = ['https://cafef.vn/']
+
+    def __init__(self, results=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.results = results if results is not None else []
 
     def parse(self, response):
-        # Lấy danh sách các thẻ chứa FAQ
-        faq_cards = response.css("div.card")
+        # Tìm tất cả các bài viết trong phần chính
+        articles = response.css("div.top_noibat_row1, div.top_noibat_row2 div.big")
 
-        for card in faq_cards:
-            # Lấy câu hỏi
-            question = card.css("button.btn-card::text").get()
-            if question:
-                question = question.strip()
+        for article in articles:
+            # Lấy tiêu đề (title)
+            title = article.css("h2 a::attr(title)").get()
+            # Lấy đường dẫn URL
+            url = article.css("h2 a::attr(href)").get()
+            if url and not url.startswith("http"):
+                url = response.urljoin(url)  # Chuyển đổi URL tương đối thành tuyệt đối
 
-            # Lấy câu trả lời
-            answer = " ".join(card.css("div.card-body *::text").getall()).strip()
+            if title and url:
+                # Lưu kết quả vào item
+                faq_item = FAQItem()
+                faq_item['title'] = title
+                faq_item['url'] = url
 
-            # Lưu dữ liệu vào FAQItem
-            faq_item = FAQItem()
-            faq_item['question'] = question
-            faq_item['answer'] = answer
-
-            yield faq_item
+                # Thêm vào danh sách kết quả
+                self.results.append({'title': title, 'url': url})
+                yield faq_item

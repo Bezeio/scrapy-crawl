@@ -1,5 +1,5 @@
 import scrapy
 
 class FAQItem(scrapy.Item):
-    question = scrapy.Field()
-    answer = scrapy.Field()
+    title = scrapy.Field()
+    url = scrapy.Field()

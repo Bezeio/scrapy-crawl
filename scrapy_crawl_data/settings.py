@@ -15,3 +15,9 @@ ITEM_PIPELINES = {
 
 #Unicode
 FEED_EXPORT_ENCODING = 'utf-8'
+
+# Crawl tối đa 3 cấp liên kết
+DEPTH_LIMIT = 3
+
+#Loại bỏ trùng lặp URL
+DUPEFILTER_CLASS = 'scrapy.dupefilters.RFPDupeFilter'
